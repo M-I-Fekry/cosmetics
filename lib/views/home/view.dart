@@ -4,6 +4,7 @@ import 'package:cosmetics/views/home/pages/home.dart';
 import 'package:cosmetics/views/home/pages/my_cart.dart';
 import 'package:cosmetics/views/home/pages/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -26,21 +27,21 @@ class _HomeViewState extends State<HomeView> {
       body: list[currentIndex].page,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 13),
+        margin: EdgeInsets.symmetric(horizontal: 13.w),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           color: Color(0xffD9D9D9),
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(25.r),
           boxShadow: [
             BoxShadow(
-              offset: Offset(4, 4),
+              offset: Offset(4.w, 4.h),
               spreadRadius: 0,
               blurStyle: BlurStyle.outer,
               color: Colors.black.withValues(alpha: .1),
             ),
             BoxShadow(
-              offset: Offset(-4, -4),
-              blurRadius: 6,
+              offset: Offset(-4.w, -4.h),
+              blurRadius: 6.r,
               spreadRadius: 0,
               blurStyle: BlurStyle.outer,
               color: Colors.black.withValues(alpha: .1),
@@ -63,6 +64,8 @@ class _HomeViewState extends State<HomeView> {
             (index) => BottomNavigationBarItem(
               icon: AppImage(
                 image: list[index].icon,
+                width: 24.w,
+                height: 24.h,
                 color: currentIndex == index
                     ? Theme.of(context).primaryColor
                     : null,

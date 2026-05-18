@@ -2,7 +2,7 @@ import 'package:cosmetics/core/components/app_image.dart';
 import 'package:cosmetics/views/home/pages/categories.dart';
 import 'package:cosmetics/views/home/pages/home.dart';
 import 'package:cosmetics/views/home/pages/my_cart.dart';
-import 'package:cosmetics/views/home/pages/profile.dart';
+import 'package:cosmetics/views/home/pages/profile/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

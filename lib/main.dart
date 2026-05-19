@@ -1,4 +1,4 @@
-import 'package:cosmetics/views/home/view.dart';
+import 'package:cosmetics/views/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,11 +30,31 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          filledButtonTheme: FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+              backgroundColor: const Color(0xFFD75D72),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+          ),
+          textTheme: TextTheme(
+            bodyMedium: TextStyle(color: Color(0xff434C6D), fontSize: 16),
+          ),
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xffB3B3C1)),
               borderRadius: BorderRadius.circular(25),
+            ),
+            labelStyle: const TextStyle(
+              color: Color(0xff8E8EA9),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+            floatingLabelStyle: const TextStyle(
+              color: Color(0xff8E8EA9),
+              fontWeight: FontWeight.bold,
             ),
             hintStyle: TextStyle(
               fontSize: 12,
@@ -47,7 +67,7 @@ class MyApp extends StatelessWidget {
         ),
         home: child,
       ),
-      child: HomeView(),
+      child: LoginView(),
     );
   }
 }

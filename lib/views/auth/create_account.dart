@@ -2,6 +2,8 @@ import 'package:cosmetics/core/components/app_button.dart';
 import 'package:cosmetics/core/components/app_image.dart';
 import 'package:cosmetics/core/components/app_input.dart';
 import 'package:cosmetics/core/components/app_login_or_register.dart';
+import 'package:cosmetics/core/logic/helper_methods.dart';
+import 'package:cosmetics/views/auth/verify_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -60,7 +62,12 @@ class CreateAccountView extends StatelessWidget {
                     isPassword: true,
                   ),
                   Gap(16.h),
-                  AppButton(text: "Next"),
+                  AppButton(
+                    text: "Next",
+                    onPressed: () {
+                      goTo(VerifyCodeView(isCreateAccount: true));
+                    },
+                  ),
                 ],
               ),
             ),

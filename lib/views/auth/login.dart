@@ -2,6 +2,10 @@ import 'package:cosmetics/core/components/app_button.dart';
 import 'package:cosmetics/core/components/app_image.dart';
 import 'package:cosmetics/core/components/app_input.dart';
 import 'package:cosmetics/core/components/app_login_or_register.dart';
+import 'package:cosmetics/core/logic/helper_methods.dart';
+import 'package:cosmetics/views/auth/create_account.dart';
+import 'package:cosmetics/views/auth/forget_password.dart';
+import 'package:cosmetics/views/home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -60,7 +64,9 @@ class LoginView extends StatelessWidget {
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        goTo(ForgetPasswordView());
+                      },
                       child: Text(
                         "Forget Password?",
                         style: TextStyle(
@@ -71,7 +77,12 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   Gap(44.h),
-                  AppButton(text: "Login"),
+                  AppButton(
+                    text: "Login",
+                    onPressed: () {
+                      goTo(HomeView(), preventPop: true);
+                    },
+                  ),
                 ],
               ),
             ),

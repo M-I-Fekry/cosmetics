@@ -17,6 +17,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   lottie: ^3.3.3
   google_maps_flutter: ^2.17.0
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cosmetics/core/components/app_image.dart';
+import 'package:cosmetics/core/logic/cache_helper.dart';
 import 'package:cosmetics/core/logic/helper_methods.dart';
+import 'package:cosmetics/views/auth/login.dart';
 import 'package:cosmetics/views/on_boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +18,7 @@ class _SplashviewState extends State<Splashview> {
   @override
   void initState() {
     super.initState();
-    goTo(OnBoardingView(), delayInSeconds: 2, preventPop: true);
+    goTo(CacheHelper.isFirstTime? OnBoardingView():LoginView(), delayInSeconds: 2, preventPop: true);
   }
 
   @override

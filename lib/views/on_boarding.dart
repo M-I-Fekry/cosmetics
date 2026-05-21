@@ -1,5 +1,6 @@
 import 'package:cosmetics/core/components/app_button.dart';
 import 'package:cosmetics/core/components/app_image.dart';
+import 'package:cosmetics/core/logic/cache_helper.dart';
 import 'package:cosmetics/core/logic/helper_methods.dart';
 import 'package:cosmetics/views/auth/login.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   int currentIndex = 0;
 
   void goToLogin() {
+    CacheHelper.setIsNotFirstTime();
     goTo(LoginView(), preventPop: true);
   }
 

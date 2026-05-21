@@ -1,8 +1,12 @@
-import 'package:cosmetics/views/auth/login.dart';
+import 'package:cosmetics/core/logic/cache_helper.dart';
+import 'package:cosmetics/core/logic/helper_methods.dart';
+import 'package:cosmetics/views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 
@@ -17,6 +21,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
+        navigatorKey: navKey,
         theme: ThemeData(
           fontFamily: "Montserrat",
           cardColor: Color(0xffD9D9D9),
@@ -67,7 +72,7 @@ class MyApp extends StatelessWidget {
         ),
         home: child,
       ),
-      child: LoginView(),
+      child: Splashview(),
     );
   }
 }

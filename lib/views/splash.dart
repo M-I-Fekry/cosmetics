@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cosmetics/core/components/app_image.dart';
 import 'package:cosmetics/core/logic/helper_methods.dart';
 import 'package:cosmetics/views/on_boarding.dart';
@@ -23,17 +24,26 @@ class _SplashviewState extends State<Splashview> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppImage(
-              image: "logo.png",
-              height: 200.h,
-              width: 200.w,
-              bottomSpace: 16.h,
-            ),
-            AppImage(image: "splash_logo2.png", height: 46.h, width: 120.w),
-          ],
-        ),
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    ZoomIn(
+      child: AppImage(
+        image: "logo.png",
+        height: 200.h,
+        width: 200.w,
+        bottomSpace: 16.h,
+      ),
+    ),
+    FadeInUp(
+      delay: const Duration(milliseconds: 600),
+      child: AppImage(
+        image: "splash_logo2.png", 
+        height: 46.h, 
+        width: 120.w,
+      ),
+    ),
+  ],
+)
       ),
     );
   }

@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppCountryCode extends StatefulWidget {
-  const AppCountryCode({super.key});
+  const AppCountryCode({super.key, required this.onCountryCodeChanged});
+  final ValueChanged<String>? onCountryCodeChanged;
 
   @override
   State<AppCountryCode> createState() => _AppCountryCodeState();
 }
 
 class _AppCountryCodeState extends State<AppCountryCode> {
-  late int selectedCountryCode;
-  final list = [20, 966, 971];
+  late String selectedCountryCode;
+  final list = ["+20", "+966", "+971"];
   @override
   void initState() {
     super.initState();
     selectedCountryCode = list.first;
+    widget.onCountryCodeChanged?.call(selectedCountryCode);
   }
 
   @override
@@ -30,7 +32,7 @@ class _AppCountryCodeState extends State<AppCountryCode> {
           ),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: DropdownButton<int>(
+        child: DropdownButton<String>(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
           value: selectedCountryCode,
           items: list
@@ -38,6 +40,7 @@ class _AppCountryCodeState extends State<AppCountryCode> {
               .toList(),
           onChanged: (value) {
             selectedCountryCode = value!;
+            widget.onCountryCodeChanged?.call(selectedCountryCode);
             setState(() {});
           },
         ),

@@ -13,34 +13,46 @@ class SuccessDialogView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      children: [
-        AppImage(image: "success.json", height: 100.h, width: 100.w),
-        Column(
+    return Dialog(
+      backgroundColor: Color(0xffD9D9D9),
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
+            AppImage(image: "success.json", height: 100.h, width: 100.w),
+            Gap(20.h),
             Text(
               isCreateAccount ? "Account Activated!" : "Password Created!",
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xff434C6D),
+              ),
+              textAlign: TextAlign.center,
             ),
-            Gap(4.h),
+            Gap(12.h),
             Text(
               isCreateAccount
-                  ? "Congratulations! Your account\n has been successfully activated"
-                  : "Congratulations! Your password\n has been successfully created",
-              style: TextStyle(color: Color(0xff8E8EA9), fontSize: 14.sp),
+                  ? "Congratulations! Your account\nhas been successfully activated"
+                  : "Congratulations! Your password\nhas been successfully created",
+              style: TextStyle(color: const Color(0xff8E8EA9), fontSize: 13.sp),
+              textAlign: TextAlign.center,
             ),
-            Gap(26.h),
+            Gap(32.h),
             AppButton(
               text: isCreateAccount ? "Go to home" : "Return to login",
               onPressed: () {
                 (isCreateAccount)
-                    ? goTo(HomeView(), preventPop: true)
-                    : goTo(LoginView(), preventPop: true);
+                    ? goTo(const HomeView(), preventPop: true)
+                    : goTo(const LoginView(), preventPop: true);
               },
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }

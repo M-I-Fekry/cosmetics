@@ -92,9 +92,12 @@ class _CheckOutViewState extends State<CheckOutView> {
                   tiltle: "Add vaucher",
                   trailing: Padding(
                     padding: EdgeInsets.symmetric(vertical: 12.r),
-                    child: AppButton(
-                      text: "Apply",
-                      buttonColor: Color(0xffD75D72),
+                    child: SizedBox(
+                      width: 90.w,
+                      child: AppButton(
+                        text: "Apply",
+                        buttonColor: Color(0xffD75D72),
+                      ),
                     ),
                   ),
                 ),

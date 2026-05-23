@@ -14,12 +14,18 @@ class AppInput extends StatefulWidget {
     this.borderRadius,
     this.isPassword = false,
     this.bottomSpace,
+    this.controller,
+    this.onCountryCodeChanged,
+    this.validator,
   });
   final String? suffixIcon, hint, lable;
   final bool withCountryCode, isPassword;
   final bool isDense;
   final double? borderRadius;
   final double? bottomSpace;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onCountryCodeChanged;
+  final FormFieldValidator<String>? validator;
 
   @override
   State<AppInput> createState() => _AppInputState();
@@ -33,10 +39,14 @@ class _AppInputState extends State<AppInput> {
     return Padding(
       padding: EdgeInsets.only(bottom: widget.bottomSpace ?? 16.h),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.withCountryCode) AppCountryCode(),
+          if (widget.withCountryCode)
+            AppCountryCode(onCountryCodeChanged: widget.onCountryCodeChanged),
           Expanded(
             child: TextFormField(
+              controller: widget.controller,
+              validator: widget.validator,
               obscureText: widget.isPassword && isHidden,
               decoration: InputDecoration(
                 labelText: widget.lable,

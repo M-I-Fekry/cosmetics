@@ -21,6 +21,11 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isloading) {
+      return const Center(
+        child: CupertinoActivityIndicator(color: Colors.black),
+      );
+    }
     return FilledButton.icon(
       icon: icon != null ? AppImage(image: icon!) : const SizedBox.shrink(),
       onPressed: onPressed ?? () {},

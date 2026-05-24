@@ -5,7 +5,6 @@ import 'package:cosmetics/core/components/app_login_or_register.dart';
 import 'package:cosmetics/core/logic/helper_methods.dart';
 import 'package:cosmetics/core/logic/input_validator.dart';
 import 'package:cosmetics/views/auth/forget_password.dart';
-import 'package:cosmetics/views/home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

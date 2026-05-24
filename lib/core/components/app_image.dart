@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 
-class AppImage extends StatelessWidget {
+class AppImage extends StatefulWidget {
   final String image;
   final double? height, width;
   final bool isCircle;
   final Color? color;
   final double? bottomSpace;
   final BoxFit fit;
+  final VoidCallback? onLottieClicked;
 
   const AppImage({
     super.key,
@@ -20,54 +20,94 @@ class AppImage extends StatelessWidget {
     this.color,
     this.fit = BoxFit.scaleDown,
     this.bottomSpace,
+    this.onLottieClicked,
   });
 
   @override
+  State<AppImage> createState() => _AppImageState();
+}
+
+class _AppImageState extends State<AppImage>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _controller;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.onLottieClicked != null) {
+      _controller = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 500),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final myfit = isCircle ? BoxFit.cover : fit;
+    final myfit = widget.isCircle ? BoxFit.cover : widget.fit;
 
     return Padding(
-      padding: bottomSpace != null
-          ? EdgeInsets.only(bottom: bottomSpace!)
+      padding: widget.bottomSpace != null
+          ? EdgeInsets.only(bottom: widget.bottomSpace!)
           : EdgeInsets.zero,
       child: Builder(
         builder: (context) {
           Widget child;
-          if (image.isEmpty) return SizedBox.shrink();
-          if (image.toLowerCase().endsWith("svg")) {
+          if (widget.image.isEmpty) return SizedBox.shrink();
+          if (widget.image.toLowerCase().endsWith("svg")) {
             child = SvgPicture.asset(
-              "assets/icons/$image",
-              color: color,
-              height: height,
-              width: width,
+              "assets/icons/${widget.image}",
+              color: widget.color,
+              height: widget.height,
+              width: widget.width,
               fit: myfit,
             );
-          } else if (image.startsWith("http")) {
+          } else if (widget.image.startsWith("http")) {
             child = Image.network(
-              image,
-              height: height,
-              width: width,
-              color: color,
+              widget.image,
+              height: widget.height,
+              width: widget.width,
+              color: widget.color,
               fit: myfit,
             );
-          } else if (image.endsWith("json")) {
+          } else if (widget.image.endsWith("json")) {
             child = Lottie.asset(
-              "assets/lotties/$image",
-              height: height,
-              width: width,
+              "assets/lotties/${widget.image}",
+              height: widget.height,
+              width: widget.width,
               fit: myfit,
+              controller: _controller,
             );
+
+            if (widget.onLottieClicked != null) {
+              child = GestureDetector(
+                onTap: () {
+                  if (_controller!.isCompleted) {
+                    _controller!.reverse();
+                  } else {
+                    _controller!.forward();
+                  }
+                  widget.onLottieClicked?.call();
+                },
+                child: child,
+              );
+            }
           } else {
             child = Image.asset(
-              "assets/images/$image",
-              color: color,
-              height: height,
-              width: width,
+              "assets/images/${widget.image}",
+              color: widget.color,
+              height: widget.height,
+              width: widget.width,
               fit: myfit,
             );
           }
 
-          return isCircle ? ClipOval(child: child) : child;
+          return widget.isCircle ? ClipOval(child: child) : child;
         },
       ),
     );

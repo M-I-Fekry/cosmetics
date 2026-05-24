@@ -64,9 +64,13 @@ class _AppInputState extends State<AppInput> {
                           setState(() {});
                         },
                         icon: AppImage(
-                          image: isHidden
-                              ? "visibility_off.svg"
-                              : "visibility.svg",
+                          image: "password_visibility.json",
+                          height: 20.h,
+                          width: 20.w,
+                          onLottieClicked: () {
+                            isHidden = !isHidden;
+                            setState(() {});
+                          },
                         ),
                       )
                     : widget.suffixIcon != null

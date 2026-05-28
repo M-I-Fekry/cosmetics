@@ -21,6 +21,8 @@ dependencies:
   circular_countdown_timer: ^0.2.4
   animate_do: ^5.1.0
   shared_preferences: ^2.5.5
+  dio: ^5.9.2
+  carousel_slider: ^5.1.2
 
 
 dev_dependencies:

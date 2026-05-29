@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,12 +13,21 @@ class AppCountryCode extends StatefulWidget {
 
 class _AppCountryCodeState extends State<AppCountryCode> {
   late String selectedCountryCode;
-  final list = ["+20", "+966", "+971"];
   @override
   void initState() {
     super.initState();
-    selectedCountryCode = list.first;
+    getData();
+  }
+
+  List<CountryModel>? list;
+  Future<void> getData() async {
+    final response = await Dio().get(
+      "https://cosmatics.growfet.com/api/Countries",
+    );
+    list = CountriesData.fromJson({"list": response.data}).list;
+    selectedCountryCode = list!.first.code;
     widget.onCountryCodeChanged?.call(selectedCountryCode);
+    setState(() {});
   }
 
   @override
@@ -32,19 +43,50 @@ class _AppCountryCodeState extends State<AppCountryCode> {
           ),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: DropdownButton<String>(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
-          value: selectedCountryCode,
-          items: list
-              .map((e) => DropdownMenuItem(value: e, child: Text("$e")))
-              .toList(),
-          onChanged: (value) {
-            selectedCountryCode = value!;
-            widget.onCountryCodeChanged?.call(selectedCountryCode);
-            setState(() {});
-          },
-        ),
+        child: list == null
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                child: const CupertinoActivityIndicator(),
+              )
+            : DropdownButton<String>(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
+                value: selectedCountryCode,
+                items: list!
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e.code,
+                        child: Text("${e.code}"),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  selectedCountryCode = value!;
+                  widget.onCountryCodeChanged?.call(selectedCountryCode);
+                  setState(() {});
+                },
+              ),
       ),
     );
+  }
+}
+
+class CountriesData {
+  late final List<CountryModel> list;
+  CountriesData.fromJson(Map<String, dynamic> json) {
+    list = List.from(
+      json["list"] ?? [],
+    ).map((e) => CountryModel.fromJson(e)).toList();
+  }
+}
+
+class CountryModel {
+  late final int id;
+  late final String code;
+  late final String name;
+
+  CountryModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    code = json['code'] ?? "";
+    name = json['name_en'] ?? "";
   }
 }

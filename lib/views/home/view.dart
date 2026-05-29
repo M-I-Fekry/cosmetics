@@ -1,5 +1,5 @@
 import 'package:cosmetics/core/components/app_image.dart';
-import 'package:cosmetics/views/home/pages/categories.dart';
+import 'package:cosmetics/views/home/pages/categories/view.dart';
 import 'package:cosmetics/views/home/pages/home/view.dart';
 import 'package:cosmetics/views/home/pages/my_cart.dart';
 import 'package:cosmetics/views/home/pages/profile/view.dart';

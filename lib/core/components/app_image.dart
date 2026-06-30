@@ -73,6 +73,13 @@ class _AppImageState extends State<AppImage>
               height: widget.height,
               width: widget.width,
               color: widget.color,
+              errorBuilder: (context, error, stackTrace) => AppImage(
+                image:
+                    "https://c8.alamy.com/comp/2AXAP2A/error-template-icon-dead-site-page-not-found-404-trouble-with-system-eps-10-2AXAP2A.jpg",
+                height: widget.height,
+                width: widget.width,
+                color: widget.color,
+              ),
               fit: myfit,
             );
           } else if (widget.image.endsWith("json")) {

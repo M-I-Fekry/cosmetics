@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class AppResendOTP extends StatefulWidget {
-  const AppResendOTP({super.key});
+  const AppResendOTP({super.key, this.onResend});
+  final VoidCallback? onResend;
 
   @override
   State<AppResendOTP> createState() => _AppResendOTPState();
@@ -32,6 +33,9 @@ class _AppResendOTPState extends State<AppResendOTP> {
               onPressed: isSent
                   ? null
                   : () {
+                      if (widget.onResend != null) {
+                        widget.onResend!();
+                      }
                       isSent = true;
                       setState(() {});
                     },

@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class AppOTP extends StatelessWidget {
-  const AppOTP({super.key});
+  const AppOTP({super.key, this.controller});
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return PinCodeTextField(
+      controller: controller,
       appContext: context,
       length: 4,
       cursorColor: Color(0xff101010).withValues(alpha: .22),

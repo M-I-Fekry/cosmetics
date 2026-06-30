@@ -21,9 +21,12 @@ class DioHelper {
     String path = "",
     Map<String, dynamic>? data,
   }) async {
-    _dio.options.headers.addAll({
-      "Authorization": "Bearer ${CacheHelper.token}",
-    });
+    if (CacheHelper.token != null && CacheHelper.token!.isNotEmpty) {
+      _dio.options.headers["Authorization"] = "Bearer ${CacheHelper.token}";
+    } else {
+      _dio.options.headers.remove("Authorization");
+    }
+
     try {
       final resp = await _dio.post(path, data: data);
 
@@ -33,7 +36,6 @@ class DioHelper {
 
       return CustomResponse(isSuccess: false);
     } on DioException catch (ex) {
-      if (ex.response?.data != null && ex.response?.data is Map) {}
       if (ex.response?.statusCode == 401) {
         CacheHelper.logout();
         goTo(LoginView());
@@ -54,9 +56,7 @@ class DioHelper {
       if (resp.statusCode == 200) {
         return CustomResponse(isSuccess: true, data: resp.data);
       } else {
-        showMsg(
-          "Something went wrong, please try again.",
-        );
+        showMsg("Something went wrong, please try again.");
       }
 
       return CustomResponse(isSuccess: false, data: resp.data);
@@ -79,11 +79,10 @@ class CustomResponse {
     if (data is Map) {
       if (data['message'] != null) {
         msg = data['message'].toString();
-      } 
-      else if (data['countryCode'] is List && data['countryCode'].isNotEmpty) {
+      } else if (data['countryCode'] is List &&
+          data['countryCode'].isNotEmpty) {
         msg = data['countryCode'][0].toString();
-      } 
-      else {
+      } else {
         msg = "Something went wrong, please try again.";
       }
     } else {

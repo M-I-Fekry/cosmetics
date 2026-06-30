@@ -1,14 +1,25 @@
 import 'package:cosmetics/core/components/app_button.dart';
 import 'package:cosmetics/core/components/app_image.dart';
 import 'package:cosmetics/core/components/app_input.dart';
+import 'package:cosmetics/core/logic/dio_helper.dart';
+import 'package:cosmetics/core/logic/helper_methods.dart';
 import 'package:cosmetics/views/auth/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class CreateNewPasswordView extends StatelessWidget {
-  const CreateNewPasswordView({super.key});
+class CreateNewPasswordView extends StatefulWidget {
+  const CreateNewPasswordView({super.key, this.phoneNumber, this.countryCode});
+  final String? phoneNumber;
+  final String? countryCode;
 
+  @override
+  State<CreateNewPasswordView> createState() => _CreateNewPasswordViewState();
+}
+
+class _CreateNewPasswordViewState extends State<CreateNewPasswordView> {
+  final newPasswordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -43,6 +54,7 @@ class CreateNewPasswordView extends StatelessWidget {
                     isDense: false,
                     borderRadius: 8.r,
                     lable: "New password",
+                    controller: newPasswordController,
                     isPassword: true,
                     bottomSpace: 16.h,
                   ),
@@ -50,16 +62,36 @@ class CreateNewPasswordView extends StatelessWidget {
                     isDense: false,
                     borderRadius: 8.r,
                     lable: "Confirm password",
+                    controller: confirmPasswordController,
                     isPassword: true,
                     bottomSpace: 56.h,
                   ),
                   AppButton(
                     text: "Confirm",
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => SuccessDialogView(),
+                    onPressed: () async {
+                      Map<String, dynamic> requestData = {
+                        "countryCode": widget.countryCode,
+                        "phoneNumber": widget.phoneNumber,
+                        "newPassword": newPasswordController.text,
+                        "confirmPassword": confirmPasswordController.text,
+                      };
+                      final resp = await DioHelper.sendData(
+                        path: "api/Auth/reset-password",
+                        data: requestData,
                       );
+
+                      if (resp != null && resp.isSuccess) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SuccessDialogView(),
+                        );
+                      } else {
+                        showMsg(
+                          resp?.msg ??
+                              "Something went wrong, please try again.",
+                          isError: true,
+                        );
+                      }
                     },
                   ),
                 ],

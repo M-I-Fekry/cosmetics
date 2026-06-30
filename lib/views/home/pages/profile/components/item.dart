@@ -1,9 +1,9 @@
 part of '../view.dart';
 
 class _Item extends StatelessWidget {
-  const _Item({required this.title, this.onTap});
+  const _Item({required this.title, this.destinationPage});
   final String title;
-  final VoidCallback? onTap;
+  final Widget? destinationPage;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,21 @@ class _Item extends StatelessWidget {
     final image = "${title.toLowerCase().replaceAll(" ", "_")}.svg";
 
     return ListTile(
-      onTap: onTap,
+      onTap: destinationPage == null
+          ? null
+          : () async {
+              if (isLogout) {
+                print("Token BEFORE logout: ${CacheHelper.token}");
+                final resp = await DioHelper.sendData(path: "/api/Auth/logout");
+                if (resp!.isSuccess) {
+                  CacheHelper.logout();
+                  print("Token AFTER logout: ${CacheHelper.token}");
+                  goTo(destinationPage!);
+                }
+              } else {
+                goTo(destinationPage!);
+              }
+            },
       leading: AppImage(image: image),
       title: Text(
         title,

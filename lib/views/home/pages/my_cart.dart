@@ -52,7 +52,14 @@ class _Item extends StatefulWidget {
 }
 
 class _ItemState extends State<_Item> {
-  int itemCount = 1;
+  final ValueNotifier<int> itemCount = ValueNotifier<int>(1);
+
+  @override
+  void dispose() {
+    itemCount.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -68,7 +75,11 @@ class _ItemState extends State<_Item> {
                 height: 102.h,
                 fit: BoxFit.cover,
               ),
-              Positioned(left: 4.w, top: 4.h, child: AppImage(image: 'delete.svg')),
+              Positioned(
+                left: 4.w,
+                top: 4.h,
+                child: AppImage(image: 'delete.svg'),
+              ),
             ],
           ),
         ),
@@ -111,25 +122,28 @@ class _ItemState extends State<_Item> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          if (itemCount > 1) {
-                            itemCount--;
-                            setState(() {});
+                          if (itemCount.value > 1) {
+                            itemCount.value--;
                           }
                         },
                         icon: AppImage(image: 'minus.svg'),
                       ),
-                      Text(
-                        "$itemCount",
-                        style: TextStyle(
-                          color: Color(0xff434C6D),
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      ValueListenableBuilder<int>(
+                        valueListenable: itemCount,
+                        builder: (context, value, child) {
+                          return Text(
+                            "$value",
+                            style: TextStyle(
+                              color: Color(0xff434C6D),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        },
                       ),
                       IconButton(
                         onPressed: () {
-                          itemCount++;
-                          setState(() {});
+                          itemCount.value++;
                         },
                         icon: AppImage(image: 'plus.svg'),
                       ),

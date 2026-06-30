@@ -33,11 +33,11 @@ class _Header extends StatelessWidget {
                   height: 96.h,
                   width: 96.h,
                   isCircle: true,
-                  image: 'https://wallpaperaccess.com/full/14373348.jpg',
+                  image: CacheHelper.image ,
                 ),
                 Gap(8.h),
                 Text(
-                  'M_I_Fekry',
+                  CacheHelper.name,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
